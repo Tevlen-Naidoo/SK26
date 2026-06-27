@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Taegeuk">
+  <circle cx="32" cy="32" r="30" fill="#fffdf8" stroke="#1b1b1b" stroke-width="2" />
+  <path d="M32 2a30 30 0 0 1 0 60 15 15 0 0 0 0-30 15 15 0 0 1 0-30z" fill="#cd2e3a" />
+  <path d="M32 62a30 30 0 0 1 0-60 15 15 0 0 0 0 30 15 15 0 0 1 0 30z" fill="#0047a0" />
+</svg>
