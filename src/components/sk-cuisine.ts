@@ -8,9 +8,9 @@ const STORE_KEY = 'sk26-cuisine-tried';
 
 @customElement('sk-cuisine')
 export class SkCuisine extends LitElement {
-  static override styles = [
-    sharedStyles,
-    css`
+	static override styles = [
+		sharedStyles,
+		css`
       :host {
         display: block;
       }
@@ -94,35 +94,35 @@ export class SkCuisine extends LitElement {
         opacity: 0.7;
       }
     `,
-  ];
+	];
 
-  @state() private tried = new Set<string>();
+	@state() private tried = new Set<string>();
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    try {
-      const raw = localStorage.getItem(STORE_KEY);
-      if (raw) this.tried = new Set(JSON.parse(raw) as string[]);
-    } catch {
-      /* ignore storage errors */
-    }
-  }
+	override connectedCallback(): void {
+		super.connectedCallback();
+		try {
+			const raw = localStorage.getItem(STORE_KEY);
+			if (raw) this.tried = new Set(JSON.parse(raw) as string[]);
+		} catch {
+			/* ignore storage errors */
+		}
+	}
 
-  private toggle(id: string): void {
-    const next = new Set(this.tried);
-    if (next.has(id)) next.delete(id);
-    else next.add(id);
-    this.tried = next;
-    try {
-      localStorage.setItem(STORE_KEY, JSON.stringify([...next]));
-    } catch {
-      /* ignore */
-    }
-  }
+	private toggle(id: string): void {
+		const next = new Set(this.tried);
+		if (next.has(id)) next.delete(id);
+		else next.add(id);
+		this.tried = next;
+		try {
+			localStorage.setItem(STORE_KEY, JSON.stringify([...next]));
+		} catch {
+			/* ignore */
+		}
+	}
 
-  private card(item: CuisineItem) {
-    const done = this.tried.has(item.id);
-    return html`<li>
+	private card(item: CuisineItem) {
+		const done = this.tried.has(item.id);
+		return html`<li>
       <label class=${item.kind === 'experience' ? 'card experience' : 'card'} data-tried=${String(done)}>
         <input
           type="checkbox"
@@ -140,14 +140,14 @@ export class SkCuisine extends LitElement {
         </article>
       </label>
     </li>`;
-  }
+	}
 
-  override render() {
-    const experiences = CUISINE.filter((c) => c.kind === 'experience');
-    const dishes = CUISINE.filter((c) => c.kind === 'dish');
-    const doneCount = dishes.filter((d) => this.tried.has(d.id)).length;
+	override render() {
+		const experiences = CUISINE.filter((c) => c.kind === 'experience');
+		const dishes = CUISINE.filter((c) => c.kind === 'dish');
+		const doneCount = dishes.filter((d) => this.tried.has(d.id)).length;
 
-    return html`
+		return html`
       <header class="intro">
         <p class="ko">음식 · Cuisine to try</p>
         <h1>Eat your way through Korea</h1>
@@ -155,13 +155,13 @@ export class SkCuisine extends LitElement {
       </header>
 
       ${experiences.length
-        ? html`<section aria-label="To book">
+				? html`<section aria-label="To book">
             <h2>Plan it 🗓️</h2>
             <ul>
               ${experiences.map((e) => this.card(e))}
             </ul>
           </section>`
-        : ''}
+				: ''}
 
       <section aria-label="Dishes to try">
         <h2>
@@ -173,5 +173,5 @@ export class SkCuisine extends LitElement {
         </ul>
       </section>
     `;
-  }
+	}
 }

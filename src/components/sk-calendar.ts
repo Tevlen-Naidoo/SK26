@@ -9,15 +9,15 @@ import './sk-event-item.js';
 
 const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = [
-  { y: 2026, m: 6, label: 'July 2026' },
-  { y: 2026, m: 7, label: 'August 2026' },
+	{ y: 2026, m: 6, label: 'July 2026' },
+	{ y: 2026, m: 7, label: 'August 2026' },
 ];
 
 @customElement('sk-calendar')
 export class SkCalendar extends LitElement {
-  static override styles = [
-    sharedStyles,
-    css`
+	static override styles = [
+		sharedStyles,
+		css`
       :host {
         display: block;
       }
@@ -129,43 +129,43 @@ export class SkCalendar extends LitElement {
         font-style: italic;
       }
     `,
-  ];
+	];
 
-  @property({ attribute: false }) now?: Date;
-  @state() private selected = '';
+	@property({ attribute: false }) now?: Date;
+	@state() private selected = '';
 
-  private eventsByDate(): Map<string, TripEvent[]> {
-    const map = new Map<string, TripEvent[]>();
-    for (const e of EVENTS) {
-      const arr = map.get(e.date) ?? [];
-      arr.push(e);
-      map.set(e.date, arr);
-    }
-    return map;
-  }
+	private eventsByDate(): Map<string, TripEvent[]> {
+		const map = new Map<string, TripEvent[]>();
+		for (const e of EVENTS) {
+			const arr = map.get(e.date) ?? [];
+			arr.push(e);
+			map.set(e.date, arr);
+		}
+		return map;
+	}
 
-  private get effectiveSelected(): string {
-    if (this.selected) return this.selected;
-    const today = seoulYMD(this.now ?? new Date());
-    return this.eventsByDate().has(today) ? today : '2026-07-19';
-  }
+	private get effectiveSelected(): string {
+		if (this.selected) return this.selected;
+		const today = seoulYMD(this.now ?? new Date());
+		return this.eventsByDate().has(today) ? today : '2026-07-19';
+	}
 
-  private iso(y: number, m: number, day: number): string {
-    return `${y}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-  }
+	private iso(y: number, m: number, day: number): string {
+		return `${y}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+	}
 
-  private renderMonth(y: number, m: number, label: string, byDate: Map<string, TripEvent[]>, today: string) {
-    const firstWd = new Date(Date.UTC(y, m, 1)).getUTCDay();
-    const days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
-    const cells: (number | null)[] = [];
-    for (let i = 0; i < firstWd; i++) cells.push(null);
-    for (let d = 1; d <= days; d++) cells.push(d);
-    while (cells.length % 7 !== 0) cells.push(null);
-    const weeks: (number | null)[][] = [];
-    for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
-    const sel = this.effectiveSelected;
+	private renderMonth(y: number, m: number, label: string, byDate: Map<string, TripEvent[]>, today: string) {
+		const firstWd = new Date(Date.UTC(y, m, 1)).getUTCDay();
+		const days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+		const cells: (number | null)[] = [];
+		for (let i = 0; i < firstWd; i++) cells.push(null);
+		for (let d = 1; d <= days; d++) cells.push(d);
+		while (cells.length % 7 !== 0) cells.push(null);
+		const weeks: (number | null)[][] = [];
+		for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
+		const sel = this.effectiveSelected;
 
-    return html`
+		return html`
       <table>
         <caption>
           ${label}
@@ -177,14 +177,14 @@ export class SkCalendar extends LitElement {
         </thead>
         <tbody>
           ${weeks.map(
-            (week) => html`<tr>
+			(week) => html`<tr>
               ${week.map((d) => {
-                if (d === null) return html`<td></td>`;
-                const iso = this.iso(y, m, d);
-                const evs = byDate.get(iso);
-                if (!evs) return html`<td><time datetime=${iso}>${d}</time></td>`;
-                const isToday = iso === today;
-                return html`<td>
+				if (d === null) return html`<td></td>`;
+				const iso = this.iso(y, m, d);
+				const evs = byDate.get(iso);
+				if (!evs) return html`<td><time datetime=${iso}>${d}</time></td>`;
+				const isToday = iso === today;
+				return html`<td>
                   <button
                     class="day"
                     aria-pressed=${iso === sel ? 'true' : 'false'}
@@ -192,28 +192,28 @@ export class SkCalendar extends LitElement {
                     @click=${() => (this.selected = iso)}
                   >
                     ${isToday
-                      ? html`<b class="today">${d}</b>`
-                      : html`<b>${d}</b>`}
+						? html`<b class="today">${d}</b>`
+						: html`<b>${d}</b>`}
                     <i class="dot" aria-hidden="true"></i>
                   </button>
                 </td>`;
-              })}
+			})}
             </tr>`,
-          )}
+		)}
         </tbody>
       </table>
     `;
-  }
+	}
 
-  override render() {
-    const byDate = this.eventsByDate();
-    const today = seoulYMD(this.now ?? new Date());
-    const sel = this.effectiveSelected;
-    const dayEvents = (byDate.get(sel) ?? []).sort((a, b) =>
-      (a.start ?? '').localeCompare(b.start ?? ''),
-    );
+	override render() {
+		const byDate = this.eventsByDate();
+		const today = seoulYMD(this.now ?? new Date());
+		const sel = this.effectiveSelected;
+		const dayEvents = (byDate.get(sel) ?? []).sort((a, b) =>
+			(a.start ?? '').localeCompare(b.start ?? ''),
+		);
 
-    return html`
+		return html`
       <header class="intro">
         <p class="ko">달력 · Calendar</p>
         <h1>Where to be, when</h1>
@@ -228,13 +228,13 @@ export class SkCalendar extends LitElement {
       <section class="day-panel" aria-live="polite">
         <h2><time datetime=${sel}>${formatDateLong(sel)}</time></h2>
         ${dayEvents.length
-          ? html`<ul>
+				? html`<ul>
               ${dayEvents.map(
-                (e) => html`<li><sk-event-item .event=${e}></sk-event-item></li>`,
-              )}
+					(e) => html`<li><sk-event-item .event=${e}></sk-event-item></li>`,
+				)}
             </ul>`
-          : html`<p class="empty">Nothing planned — pick a highlighted day above.</p>`}
+				: html`<p class="empty">Nothing planned — pick a highlighted day above.</p>`}
       </section>
     `;
-  }
+	}
 }

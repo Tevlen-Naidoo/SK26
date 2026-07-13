@@ -6,21 +6,21 @@ import { CITY_NAME_EN, CITY_NAME_KO } from '../data/cities.js';
 import type { City, Tip } from '../types.js';
 
 const CAT_ICON: Record<Tip['category'], string> = {
-  money: '💵',
-  transport: '🚇',
-  etiquette: '🙇',
-  safety: '🚨',
-  food: '🍴',
-  connectivity: '📶',
-  weather: '🌦️',
-  booking: '🎟️',
+	money: '💵',
+	transport: '🚇',
+	etiquette: '🙇',
+	safety: '🚨',
+	food: '🍴',
+	connectivity: '📶',
+	weather: '🌦️',
+	booking: '🎟️',
 };
 
 @customElement('sk-tips')
 export class SkTips extends LitElement {
-  static override styles = [
-    sharedStyles,
-    css`
+	static override styles = [
+		sharedStyles,
+		css`
       :host {
         display: block;
       }
@@ -79,14 +79,14 @@ export class SkTips extends LitElement {
         color: var(--ink-soft);
       }
     `,
-  ];
+	];
 
-  @property() city: City = 'seoul';
+	@property() city: City = 'seoul';
 
-  private renderList(tips: Tip[]) {
-    return html`<ul>
+	private renderList(tips: Tip[]) {
+		return html`<ul>
       ${tips.map(
-        (t) => html`<li>
+			(t) => html`<li>
           <details>
             <summary>
               <i aria-hidden="true">${CAT_ICON[t.category]}</i> ${t.title}
@@ -94,14 +94,14 @@ export class SkTips extends LitElement {
             <p>${t.body}</p>
           </details>
         </li>`,
-      )}
+		)}
     </ul>`;
-  }
+	}
 
-  override render() {
-    const global = TIPS.filter((t) => t.scope === 'global');
-    const local = TIPS.filter((t) => t.scope === this.city);
-    return html`
+	override render() {
+		const global = TIPS.filter((t) => t.scope === 'global');
+		const local = TIPS.filter((t) => t.scope === this.city);
+		return html`
       <header class="intro">
         <p class="ko">꿀팁 · Good to know</p>
         <h1>Things to look out for</h1>
@@ -119,5 +119,5 @@ export class SkTips extends LitElement {
         ${this.renderList(global)}
       </section>
     `;
-  }
+	}
 }

@@ -7,16 +7,16 @@ import type { City, TripEvent } from '../types.js';
 import './sk-day-card.js';
 
 interface DayGroup {
-  date: string;
-  city: City;
-  events: TripEvent[];
+	date: string;
+	city: City;
+	events: TripEvent[];
 }
 
 @customElement('sk-itinerary')
 export class SkItinerary extends LitElement {
-  static override styles = [
-    sharedStyles,
-    css`
+	static override styles = [
+		sharedStyles,
+		css`
       :host {
         display: block;
       }
@@ -53,35 +53,35 @@ export class SkItinerary extends LitElement {
         color: var(--ink);
       }
     `,
-  ];
+	];
 
-  private groupsByCity(): { city: City; days: DayGroup[] }[] {
-    const byDate = new Map<string, TripEvent[]>();
-    for (const e of EVENTS) {
-      const arr = byDate.get(e.date) ?? [];
-      arr.push(e);
-      byDate.set(e.date, arr);
-    }
-    const days: DayGroup[] = [...byDate.entries()]
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([date, events]) => ({
-        date,
-        city: events[0].city,
-        events: events.sort((a, b) => (a.start ?? '').localeCompare(b.start ?? '')),
-      }));
+	private groupsByCity(): { city: City; days: DayGroup[] }[] {
+		const byDate = new Map<string, TripEvent[]>();
+		for (const e of EVENTS) {
+			const arr = byDate.get(e.date) ?? [];
+			arr.push(e);
+			byDate.set(e.date, arr);
+		}
+		const days: DayGroup[] = [...byDate.entries()]
+			.sort(([a], [b]) => a.localeCompare(b))
+			.map(([date, events]) => ({
+				date,
+				city: events[0].city,
+				events: events.sort((a, b) => (a.start ?? '').localeCompare(b.start ?? '')),
+			}));
 
-    const out: { city: City; days: DayGroup[] }[] = [];
-    for (const d of days) {
-      const last = out[out.length - 1];
-      if (last && last.city === d.city) last.days.push(d);
-      else out.push({ city: d.city, days: [d] });
-    }
-    return out;
-  }
+		const out: { city: City; days: DayGroup[] }[] = [];
+		for (const d of days) {
+			const last = out[out.length - 1];
+			if (last && last.city === d.city) last.days.push(d);
+			else out.push({ city: d.city, days: [d] });
+		}
+		return out;
+	}
 
-  override render() {
-    const groups = this.groupsByCity();
-    return html`
+	override render() {
+		const groups = this.groupsByCity();
+		return html`
       <header class="intro">
         <p class="ko">일정 · Itinerary</p>
         <h1>Seoul → Jeju → Busan</h1>
@@ -91,25 +91,25 @@ export class SkItinerary extends LitElement {
         </p>
       </header>
       ${groups.map((grp) => {
-        const seg = SEGMENTS.find((s) => s.city === grp.city);
-        return html`
+			const seg = SEGMENTS.find((s) => s.city === grp.city);
+			return html`
           <section class="city">
             <h2 class="city-head">
               <data lang="ko">${seg?.nameKo ?? ''}</data>
               ${seg?.nameEn ?? grp.city}
             </h2>
             ${seg?.hotel
-              ? html`<dl class="hotel">
+					? html`<dl class="hotel">
                   <dt>${seg.hotel.name}</dt>
                   <dd>${seg.hotel.address}</dd>
                 </dl>`
-              : ''}
+					: ''}
             ${grp.days.map(
-              (d) => html`<sk-day-card .date=${d.date} .events=${d.events}></sk-day-card>`,
-            )}
+						(d) => html`<sk-day-card .date=${d.date} .events=${d.events}></sk-day-card>`,
+					)}
           </section>
         `;
-      })}
+		})}
     `;
-  }
+	}
 }

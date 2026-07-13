@@ -6,9 +6,9 @@ import type { Phase } from '../types.js';
 
 @customElement('sk-city-badge')
 export class SkCityBadge extends LitElement {
-  static override styles = [
-    sharedStyles,
-    css`
+	static override styles = [
+		sharedStyles,
+		css`
       p {
         display: inline-flex;
         align-items: center;
@@ -28,17 +28,17 @@ export class SkCityBadge extends LitElement {
         font-size: var(--step-0);
       }
     `,
-  ];
+	];
 
-  @property() phase: Phase = 'pre';
+	@property() phase: Phase = 'pre';
 
-  override render() {
-    const label =
-      this.phase === 'pre'
-        ? html`<b>Not started</b> · 곧 출발`
-        : this.phase === 'post'
-          ? html`<b>Trip complete</b> · 여행 끝`
-          : html`<data>${CITY_NAME_KO[this.phase]}</data> <b>${CITY_NAME_EN[this.phase]}</b>`;
-    return html`<p title="Where we are now">📍 ${label}</p>`;
-  }
+	override render() {
+		const label =
+			this.phase === 'pre'
+				? html`<b>Not started</b> · 곧 출발`
+				: this.phase === 'post'
+					? html`<b>Trip complete</b> · 여행 끝`
+					: html`<data>${CITY_NAME_KO[this.phase]}</data> <b>${CITY_NAME_EN[this.phase]}</b>`;
+		return html`<p title="Where we are now">📍 ${label}</p>`;
+	}
 }

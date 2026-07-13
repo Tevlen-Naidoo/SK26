@@ -3,54 +3,54 @@ import { customElement, state } from 'lit/decorators.js';
 import { sharedStyles } from '../styles/shared.js';
 
 interface Zone {
-  flag: string;
-  country: string;
-  city: string;
-  tz: string;
-  abbr: string;
-  offset: string;
-  rel: string;
-  home?: boolean;
-  trip?: boolean;
+	flag: string;
+	country: string;
+	city: string;
+	tz: string;
+	abbr: string;
+	offset: string;
+	rel: string;
+	home?: boolean;
+	trip?: boolean;
 }
 
 const ZONES: Zone[] = [
-  {
-    flag: '🇿🇦',
-    country: 'South Africa',
-    city: 'Johannesburg',
-    tz: 'Africa/Johannesburg',
-    abbr: 'SAST',
-    offset: 'UTC+2',
-    rel: 'Home',
-    home: true,
-  },
-  {
-    flag: '🇦🇪',
-    country: 'Dubai',
-    city: 'Dubai (layover)',
-    tz: 'Asia/Dubai',
-    abbr: 'GST',
-    offset: 'UTC+4',
-    rel: '+2 h ahead of home',
-  },
-  {
-    flag: '🇰🇷',
-    country: 'South Korea',
-    city: 'Seoul · Jeju · Busan',
-    tz: 'Asia/Seoul',
-    abbr: 'KST',
-    offset: 'UTC+9',
-    rel: '+7 h ahead of home',
-    trip: true,
-  },
+	{
+		flag: '🇿🇦',
+		country: 'South Africa',
+		city: 'Johannesburg',
+		tz: 'Africa/Johannesburg',
+		abbr: 'SAST',
+		offset: 'UTC+2',
+		rel: 'Home',
+		home: true,
+	},
+	{
+		flag: '🇦🇪',
+		country: 'Dubai',
+		city: 'Dubai (layover)',
+		tz: 'Asia/Dubai',
+		abbr: 'GST',
+		offset: 'UTC+4',
+		rel: '+2 h ahead of home',
+	},
+	{
+		flag: '🇰🇷',
+		country: 'South Korea',
+		city: 'Seoul · Jeju · Busan',
+		tz: 'Asia/Seoul',
+		abbr: 'KST',
+		offset: 'UTC+9',
+		rel: '+7 h ahead of home',
+		trip: true,
+	},
 ];
 
 @customElement('sk-clocks')
 export class SkClocks extends LitElement {
-  static override styles = [
-    sharedStyles,
-    css`
+	static override styles = [
+		sharedStyles,
+		css`
       :host {
         display: block;
       }
@@ -138,44 +138,44 @@ export class SkClocks extends LitElement {
         color: var(--taeguk-red);
       }
     `,
-  ];
+	];
 
-  @state() private now = new Date();
-  private timer = 0;
+	@state() private now = new Date();
+	private timer = 0;
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.timer = window.setInterval(() => (this.now = new Date()), 1000);
-  }
+	override connectedCallback(): void {
+		super.connectedCallback();
+		this.timer = window.setInterval(() => (this.now = new Date()), 1000);
+	}
 
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    clearInterval(this.timer);
-  }
+	override disconnectedCallback(): void {
+		super.disconnectedCallback();
+		clearInterval(this.timer);
+	}
 
-  private time(tz: string): { hms: string; secs: string } {
-    const parts = new Intl.DateTimeFormat('en-GB', {
-      timeZone: tz,
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
-    }).formatToParts(this.now);
-    const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '00';
-    return { hms: `${get('hour')}:${get('minute')}`, secs: get('second') };
-  }
+	private time(tz: string): { hms: string; secs: string } {
+		const parts = new Intl.DateTimeFormat('en-GB', {
+			timeZone: tz,
+			hour: '2-digit',
+			minute: '2-digit',
+			second: '2-digit',
+			hour12: false,
+		}).formatToParts(this.now);
+		const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '00';
+		return { hms: `${get('hour')}:${get('minute')}`, secs: get('second') };
+	}
 
-  private date(tz: string): string {
-    return new Intl.DateTimeFormat('en-GB', {
-      timeZone: tz,
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-    }).format(this.now);
-  }
+	private date(tz: string): string {
+		return new Intl.DateTimeFormat('en-GB', {
+			timeZone: tz,
+			weekday: 'long',
+			day: 'numeric',
+			month: 'long',
+		}).format(this.now);
+	}
 
-  override render() {
-    return html`
+	override render() {
+		return html`
       <header class="intro">
         <p class="ko">시계 · World clocks</p>
         <h1>What time is it back there?</h1>
@@ -184,8 +184,8 @@ export class SkClocks extends LitElement {
 
       <ul>
         ${ZONES.map((z) => {
-          const { hms, secs } = this.time(z.tz);
-          return html`<li>
+			const { hms, secs } = this.time(z.tz);
+			return html`<li>
             <article class="clock" ?data-trip=${z.trip}>
               <h2>
                 <i aria-hidden="true">${z.flag}</i> ${z.country}
@@ -202,8 +202,8 @@ export class SkClocks extends LitElement {
               <p class="rel">${z.home ? html`<b>${z.rel}</b>` : z.rel}</p>
             </article>
           </li>`;
-        })}
+		})}
       </ul>
     `;
-  }
+	}
 }

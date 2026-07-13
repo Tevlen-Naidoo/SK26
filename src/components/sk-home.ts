@@ -5,19 +5,19 @@ import { SEGMENTS } from '../data/cities.js';
 import { formatDateLong } from '../lib/dates.js';
 
 const QUICK: { href: string; emoji: string; label: string }[] = [
-  { href: '#/itinerary', emoji: '📋', label: 'Itinerary' },
-  { href: '#/calendar', emoji: '📅', label: 'Calendar' },
-  { href: '#/cuisine', emoji: '🍜', label: 'Cuisine' },
-  { href: '#/inspo', emoji: '📷', label: 'Photos' },
-  { href: '#/tips', emoji: '💡', label: 'Tips' },
-  { href: '#/clocks', emoji: '🕑', label: 'Clocks' },
+	{ href: '#/itinerary', emoji: '📋', label: 'Itinerary' },
+	{ href: '#/calendar', emoji: '📅', label: 'Calendar' },
+	{ href: '#/cuisine', emoji: '🍜', label: 'Cuisine' },
+	{ href: '#/inspo', emoji: '📷', label: 'Photos' },
+	{ href: '#/tips', emoji: '💡', label: 'Tips' },
+	{ href: '#/clocks', emoji: '🕑', label: 'Clocks' },
 ];
 
 @customElement('sk-home')
 export class SkHome extends LitElement {
-  static override styles = [
-    sharedStyles,
-    css`
+	static override styles = [
+		sharedStyles,
+		css`
       :host {
         display: block;
       }
@@ -109,27 +109,27 @@ export class SkHome extends LitElement {
         text-align: right;
       }
     `,
-  ];
+	];
 
-  override render() {
-    return html`
+	override render() {
+		return html`
       <section class="hero">
         <small class="ko" lang="ko">대한민국 · Welcome</small>
         <h1>South Korea 2026</h1>
-        <p class="sub">For Thendral and Tevlen</p>
+        <p class="sub">For da homies</p>
         <p class="intro">
-          Your pocket trip companion — the full day-by-day plan, a live calendar that
-          tells you where to be right now, photo spots for each city, a Korean food
-          bucket-list, and the practical things to know. Seoul → Jeju → Busan.
+          Our pocket trip companion.
+	<br>
+	Seoul → Jeju → Busan.
         </p>
 
         <nav class="quick" aria-label="Quick links">
           <ul>
             ${QUICK.map(
-              (q) => html`<li>
+			(q) => html`<li>
                 <a href=${q.href}><i aria-hidden="true">${q.emoji}</i> ${q.label}</a>
               </li>`,
-            )}
+		)}
           </ul>
         </nav>
       </section>
@@ -138,16 +138,16 @@ export class SkHome extends LitElement {
         <h2>The route · 18 Jul – 2 Aug</h2>
         <ol>
           ${SEGMENTS.map(
-            (s) => html`<li>
+			(s) => html`<li>
               <b>${s.nameEn}<small lang="ko">${s.nameKo}</small></b>
               <small>${s.hotel?.name ?? ''}</small>
               <time datetime=${s.arrive.slice(0, 10)}
                 >${formatDateLong(s.arrive.slice(0, 10))}</time
               >
             </li>`,
-          )}
+		)}
         </ol>
       </section>
     `;
-  }
+	}
 }

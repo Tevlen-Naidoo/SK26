@@ -18,20 +18,20 @@ import './sk-tips.js';
 import './sk-clocks.js';
 
 const TABS: { id: TabId; en: string; ko: string }[] = [
-  { id: 'home', en: 'Home', ko: '홈' },
-  { id: 'itinerary', en: 'Itinerary', ko: '일정' },
-  { id: 'calendar', en: 'Calendar', ko: '달력' },
-  { id: 'cuisine', en: 'Cuisine', ko: '음식' },
-  { id: 'inspo', en: 'Photos', ko: '사진' },
-  { id: 'tips', en: 'Tips', ko: '꿀팁' },
-  { id: 'clocks', en: 'Clocks', ko: '시계' },
+	{ id: 'home', en: 'Home', ko: '홈' },
+	{ id: 'itinerary', en: 'Itinerary', ko: '일정' },
+	{ id: 'calendar', en: 'Calendar', ko: '달력' },
+	{ id: 'cuisine', en: 'Cuisine', ko: '음식' },
+	{ id: 'inspo', en: 'Photos', ko: '사진' },
+	{ id: 'tips', en: 'Tips', ko: '꿀팁' },
+	{ id: 'clocks', en: 'Clocks', ko: '시계' },
 ];
 
 @customElement('sk-app')
 export class SkApp extends LitElement {
-  static override styles = [
-    sharedStyles,
-    css`
+	static override styles = [
+		sharedStyles,
+		css`
       :host {
         display: block;
         min-height: 100vh;
@@ -156,80 +156,80 @@ export class SkApp extends LitElement {
         }
       }
     `,
-  ];
+	];
 
-  @state() private tab: TabId = tabFromHash();
-  @state() private phase: Phase = 'pre';
-  private override?: string;
-  private now!: Date;
-  private offHash?: () => void;
-  private clock = 0;
+	@state() private tab: TabId = tabFromHash();
+	@state() private phase: Phase = 'pre';
+	private override?: string;
+	private now!: Date;
+	private offHash?: () => void;
+	private clock = 0;
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.override = new URLSearchParams(location.search).get('now') ?? undefined;
-    this.recompute();
-    this.offHash = onHashChange((t) => {
-      this.tab = t;
-    });
-    if (!this.override) {
-      this.clock = window.setInterval(() => this.recompute(), 60_000);
-    }
-  }
+	override connectedCallback(): void {
+		super.connectedCallback();
+		this.override = new URLSearchParams(location.search).get('now') ?? undefined;
+		this.recompute();
+		this.offHash = onHashChange((t) => {
+			this.tab = t;
+		});
+		if (!this.override) {
+			this.clock = window.setInterval(() => this.recompute(), 60_000);
+		}
+	}
 
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.offHash?.();
-    clearInterval(this.clock);
-  }
+	override disconnectedCallback(): void {
+		super.disconnectedCallback();
+		this.offHash?.();
+		clearInterval(this.clock);
+	}
 
-  private recompute(): void {
-    this.now = resolveNow(this.override);
-    this.phase = currentPhase(this.now, SEGMENTS);
-    const accent = CITY_THEME[themeCity(this.phase)].accent;
-    document.documentElement.style.setProperty('--city-accent', accent);
-    this.requestUpdate();
-  }
+	private recompute(): void {
+		this.now = resolveNow(this.override);
+		this.phase = currentPhase(this.now, SEGMENTS);
+		const accent = CITY_THEME[themeCity(this.phase)].accent;
+		document.documentElement.style.setProperty('--city-accent', accent);
+		this.requestUpdate();
+	}
 
-  private onTabKey(e: KeyboardEvent): void {
-    const i = ALL_TABS.indexOf(this.tab);
-    let next = i;
-    if (e.key === 'ArrowRight') next = (i + 1) % ALL_TABS.length;
-    else if (e.key === 'ArrowLeft') next = (i - 1 + ALL_TABS.length) % ALL_TABS.length;
-    else if (e.key === 'Home') next = 0;
-    else if (e.key === 'End') next = ALL_TABS.length - 1;
-    else return;
-    e.preventDefault();
-    location.hash = `#/${ALL_TABS[next]}`;
-    requestAnimationFrame(() => {
-      const el = this.renderRoot.querySelector<HTMLAnchorElement>(`#tab-${ALL_TABS[next]}`);
-      el?.focus();
-    });
-  }
+	private onTabKey(e: KeyboardEvent): void {
+		const i = ALL_TABS.indexOf(this.tab);
+		let next = i;
+		if (e.key === 'ArrowRight') next = (i + 1) % ALL_TABS.length;
+		else if (e.key === 'ArrowLeft') next = (i - 1 + ALL_TABS.length) % ALL_TABS.length;
+		else if (e.key === 'Home') next = 0;
+		else if (e.key === 'End') next = ALL_TABS.length - 1;
+		else return;
+		e.preventDefault();
+		location.hash = `#/${ALL_TABS[next]}`;
+		requestAnimationFrame(() => {
+			const el = this.renderRoot.querySelector<HTMLAnchorElement>(`#tab-${ALL_TABS[next]}`);
+			el?.focus();
+		});
+	}
 
-  private panel() {
-    const city = themeCity(this.phase);
-    switch (this.tab) {
-      case 'itinerary':
-        return html`<sk-itinerary></sk-itinerary>`;
-      case 'calendar':
-        return html`<sk-calendar .now=${this.override ? this.now : undefined}></sk-calendar>`;
-      case 'cuisine':
-        return html`<sk-cuisine></sk-cuisine>`;
-      case 'inspo':
-        return html`<sk-inspiration city=${city}></sk-inspiration>`;
-      case 'tips':
-        return html`<sk-tips city=${city}></sk-tips>`;
-      case 'clocks':
-        return html`<sk-clocks></sk-clocks>`;
-      default:
-        return html`<sk-home></sk-home>`;
-    }
-  }
+	private panel() {
+		const city = themeCity(this.phase);
+		switch (this.tab) {
+			case 'itinerary':
+				return html`<sk-itinerary></sk-itinerary>`;
+			case 'calendar':
+				return html`<sk-calendar .now=${this.override ? this.now : undefined}></sk-calendar>`;
+			case 'cuisine':
+				return html`<sk-cuisine></sk-cuisine>`;
+			case 'inspo':
+				return html`<sk-inspiration city=${city}></sk-inspiration>`;
+			case 'tips':
+				return html`<sk-tips city=${city}></sk-tips>`;
+			case 'clocks':
+				return html`<sk-clocks></sk-clocks>`;
+			default:
+				return html`<sk-home></sk-home>`;
+		}
+	}
 
-  override render() {
-    const themed = themeCity(this.phase);
-    return html`
+	override render() {
+		const themed = themeCity(this.phase);
+		return html`
       <sk-canvas-bg city=${themed}></sk-canvas-bg>
 
       <header class="top">
@@ -245,7 +245,7 @@ export class SkApp extends LitElement {
 
       <nav role="tablist" aria-label="Sections" @keydown=${this.onTabKey}>
         ${TABS.map(
-          (t) => html`<a
+			(t) => html`<a
             id=${`tab-${t.id}`}
             role="tab"
             href=${`#/${t.id}`}
@@ -256,7 +256,7 @@ export class SkApp extends LitElement {
             <small lang="ko">${t.ko}</small>
             <b>${t.en}</b>
           </a>`,
-        )}
+		)}
       </nav>
 
       <main>
@@ -277,5 +277,5 @@ export class SkApp extends LitElement {
         </p>
       </footer>
     `;
-  }
+	}
 }

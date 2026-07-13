@@ -10,9 +10,9 @@ const CITIES: City[] = ['seoul', 'jeju', 'busan'];
 
 @customElement('sk-inspiration')
 export class SkInspiration extends LitElement {
-  static override styles = [
-    sharedStyles,
-    css`
+	static override styles = [
+		sharedStyles,
+		css`
       :host {
         display: block;
       }
@@ -88,29 +88,29 @@ export class SkInspiration extends LitElement {
         color: var(--taeguk-red);
       }
     `,
-  ];
+	];
 
-  /** Current location (from <sk-app>); the gallery defaults to this. */
-  @property() city: City = 'seoul';
-  @state() private chosen?: City;
+	/** Current location (from <sk-app>); the gallery defaults to this. */
+	@property() city: City = 'seoul';
+	@state() private chosen?: City;
 
-  private get active(): City {
-    return this.chosen ?? this.city;
-  }
+	private get active(): City {
+		return this.chosen ?? this.city;
+	}
 
-  private onSelect(e: Event) {
-    this.chosen = (e.target as HTMLSelectElement).value as City;
-  }
+	private onSelect(e: Event) {
+		this.chosen = (e.target as HTMLSelectElement).value as City;
+	}
 
-  private onImgError(e: Event) {
-    const img = e.target as HTMLImageElement;
-    if (!img.src.endsWith(PLACEHOLDER)) img.src = PLACEHOLDER;
-  }
+	private onImgError(e: Event) {
+		const img = e.target as HTMLImageElement;
+		if (!img.src.endsWith(PLACEHOLDER)) img.src = PLACEHOLDER;
+	}
 
-  override render() {
-    const active = this.active;
-    const items = INSPIRATION.filter((i) => i.city === active);
-    return html`
+	override render() {
+		const active = this.active;
+		const items = INSPIRATION.filter((i) => i.city === active);
+		return html`
       <header class="intro">
         <p class="ko">사진 · Photo inspiration</p>
         <h1>Shots to chase in ${CITY_NAME_EN[active]}</h1>
@@ -120,17 +120,17 @@ export class SkInspiration extends LitElement {
         <label for="city-pick">Show ideas for</label>
         <select id="city-pick" @change=${this.onSelect} .value=${active}>
           ${CITIES.map(
-            (c) =>
-              html`<option value=${c} ?selected=${c === active}>
+			(c) =>
+				html`<option value=${c} ?selected=${c === active}>
                 ${CITY_NAME_KO[c]} ${CITY_NAME_EN[c]}
               </option>`,
-          )}
+		)}
         </select>
       </form>
 
       <ul>
         ${items.map(
-          (i) => html`
+			(i) => html`
             <li>
               <figure>
                 <img
@@ -144,14 +144,14 @@ export class SkInspiration extends LitElement {
                   <p class="spot">${i.spot}</p>
                   <p class="tip">${i.tip}</p>
                   ${i.bestTime
-                    ? html`<p class="when"><b>Best:</b> ${i.bestTime}</p>`
-                    : ''}
+					? html`<p class="when"><b>Best:</b> ${i.bestTime}</p>`
+					: ''}
                 </figcaption>
               </figure>
             </li>
           `,
-        )}
+		)}
       </ul>
     `;
-  }
+	}
 }

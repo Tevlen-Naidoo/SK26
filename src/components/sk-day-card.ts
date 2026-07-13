@@ -8,9 +8,9 @@ import './sk-event-item.js';
 
 @customElement('sk-day-card')
 export class SkDayCard extends LitElement {
-  static override styles = [
-    sharedStyles,
-    css`
+	static override styles = [
+		sharedStyles,
+		css`
       article {
         margin-bottom: var(--space-5);
       }
@@ -33,14 +33,14 @@ export class SkDayCard extends LitElement {
         gap: var(--space-3);
       }
     `,
-  ];
+	];
 
-  @property() date = '';
-  @property({ attribute: false }) events: TripEvent[] = [];
+	@property() date = '';
+	@property({ attribute: false }) events: TripEvent[] = [];
 
-  override render() {
-    const city = this.events[0]?.city;
-    return html`
+	override render() {
+		const city = this.events[0]?.city;
+		return html`
       <article>
         <header>
           <h2><time datetime=${this.date}>${formatDateLong(this.date)}</time></h2>
@@ -48,10 +48,10 @@ export class SkDayCard extends LitElement {
         </header>
         <ul>
           ${this.events.map(
-            (e) => html`<li><sk-event-item .event=${e}></sk-event-item></li>`,
-          )}
+			(e) => html`<li><sk-event-item .event=${e}></sk-event-item></li>`,
+		)}
         </ul>
       </article>
     `;
-  }
+	}
 }

@@ -4,9 +4,9 @@ import { sharedStyles } from '../styles/shared.js';
 
 @customElement('sk-map-links')
 export class SkMapLinks extends LitElement {
-  static override styles = [
-    sharedStyles,
-    css`
+	static override styles = [
+		sharedStyles,
+		css`
       nav {
         margin-top: var(--space-2);
       }
@@ -32,28 +32,28 @@ export class SkMapLinks extends LitElement {
         color: var(--city-accent);
       }
     `,
-  ];
+	];
 
-  @property() google?: string;
-  @property() kakao?: string;
+	@property() google?: string;
+	@property() kakao?: string;
 
-  override render() {
-    if (!this.google && !this.kakao) return nothing;
-    return html`
+	override render() {
+		if (!this.google && !this.kakao) return nothing;
+		return html`
       <nav aria-label="Map links">
         <ul>
           ${this.google
-            ? html`<li>
+				? html`<li>
                 <a href=${this.google} target="_blank" rel="noopener noreferrer">📍 Google</a>
               </li>`
-            : nothing}
+				: nothing}
           ${this.kakao
-            ? html`<li>
+				? html`<li>
                 <a href=${this.kakao} target="_blank" rel="noopener noreferrer">🗺️ Kakao</a>
               </li>`
-            : nothing}
+				: nothing}
         </ul>
       </nav>
     `;
-  }
+	}
 }

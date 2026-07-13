@@ -5,22 +5,22 @@ import type { EventCategory, TripEvent } from '../types.js';
 import './sk-map-links.js';
 
 const ICON: Record<EventCategory, string> = {
-  travel: '✈️',
-  food: '🍜',
-  sightseeing: '⛩️',
-  museum: '🏛️',
-  nature: '🌿',
-  show: '🎆',
-  shopping: '🛍️',
-  relax: '🌙',
-  sport: '⚾',
+	travel: '✈️',
+	food: '🍜',
+	sightseeing: '⛩️',
+	museum: '🏛️',
+	nature: '🌿',
+	show: '🎆',
+	shopping: '🛍️',
+	relax: '🌙',
+	sport: '⚾',
 };
 
 @customElement('sk-event-item')
 export class SkEventItem extends LitElement {
-  static override styles = [
-    sharedStyles,
-    css`
+	static override styles = [
+		sharedStyles,
+		css`
       article.event {
         display: grid;
         grid-template-columns: 4.5rem 1fr;
@@ -76,14 +76,14 @@ export class SkEventItem extends LitElement {
         font-size: var(--step--1);
       }
     `,
-  ];
+	];
 
-  @property({ attribute: false }) event!: TripEvent;
+	@property({ attribute: false }) event!: TripEvent;
 
-  override render() {
-    const e = this.event;
-    const cost = e.cost;
-    return html`
+	override render() {
+		const e = this.event;
+		const cost = e.cost;
+		return html`
       <article class="event" ?data-optional=${e.optional}>
         <time datetime=${`${e.date}T${e.start ?? '00:00'}`}>
           ${e.start ?? '—'}${e.end ? html`<br />${e.end}` : nothing}
@@ -93,33 +93,33 @@ export class SkEventItem extends LitElement {
             <i aria-hidden="true">${ICON[e.category]}</i>
             <em
               >${e.title}${e.optional
-                ? html` <small>(optional)</small>`
-                : nothing}</em
+				? html` <small>(optional)</small>`
+				: nothing}</em
             >
           </h3>
           ${e.summary ? html`<p>${e.summary}</p>` : nothing}
           <p class="meta">
             ${cost
-              ? cost.krw === 0
-                ? html`<data class="free" value="0">Free</data>`
-                : html`<data class="price" value=${cost.krw}
+				? cost.krw === 0
+					? html`<data class="free" value="0">Free</data>`
+					: html`<data class="price" value=${cost.krw}
                       >₩${cost.krw.toLocaleString()}</data
                     >
                     <small
                       >·
                       <data value=${cost.zar}>R${cost.zar.toLocaleString()}</data> pp</small
                     >`
-              : nothing}
+				: nothing}
             ${cost?.note ? html`<mark>${cost.note}</mark>` : nothing}
           </p>
           ${e.location?.google || e.location?.kakao
-            ? html`<sk-map-links
+				? html`<sk-map-links
                 .google=${e.location.google}
                 .kakao=${e.location.kakao}
               ></sk-map-links>`
-            : nothing}
+				: nothing}
         </section>
       </article>
     `;
-  }
+	}
 }

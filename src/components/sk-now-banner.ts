@@ -6,9 +6,9 @@ import { daysUntil, formatDateLong, formatTimeRange, nowOrNext } from '../lib/da
 
 @customElement('sk-now-banner')
 export class SkNowBanner extends LitElement {
-  static override styles = [
-    sharedStyles,
-    css`
+	static override styles = [
+		sharedStyles,
+		css`
       aside {
         display: flex;
         align-items: center;
@@ -43,61 +43,61 @@ export class SkNowBanner extends LitElement {
         line-height: 1;
       }
     `,
-  ];
+	];
 
-  /** Override "now"; when undefined the banner ticks live every minute. */
-  @property({ attribute: false }) now?: Date;
+	/** Override "now"; when undefined the banner ticks live every minute. */
+	@property({ attribute: false }) now?: Date;
 
-  private timer = 0;
+	private timer = 0;
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.timer = window.setInterval(() => {
-      if (!this.now) this.requestUpdate();
-    }, 60_000);
-  }
+	override connectedCallback(): void {
+		super.connectedCallback();
+		this.timer = window.setInterval(() => {
+			if (!this.now) this.requestUpdate();
+		}, 60_000);
+	}
 
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    clearInterval(this.timer);
-  }
+	override disconnectedCallback(): void {
+		super.disconnectedCallback();
+		clearInterval(this.timer);
+	}
 
-  override render() {
-    const now = this.now ?? new Date();
-    const { state, event } = nowOrNext(now, EVENTS);
+	override render() {
+		const now = this.now ?? new Date();
+		const { state, event } = nowOrNext(now, EVENTS);
 
-    let kicker = '';
-    let title = '';
-    let sub: unknown = nothing;
-    let icon = '🧭';
+		let kicker = '';
+		let title = '';
+		let sub: unknown = nothing;
+		let icon = '🧭';
 
-    if (state === 'pre' && event) {
-      const d = daysUntil(now, event.date);
-      kicker = '안녕하세요 · Annyeong';
-      title =
-        d <= 0 ? 'Departure day — let’s go!' : `Trip begins in ${d} day${d === 1 ? '' : 's'}`;
-      sub = html`First up: ${event.title}`;
-      icon = '🛫';
-    } else if (state === 'now' && event) {
-      kicker = 'Right now · 지금';
-      title = event.title;
-      sub = html`Until <time>${event.end ?? '—'}</time>${event.location
-          ? html` · ${event.location.name}`
-          : nothing}`;
-      icon = '📍';
-    } else if (state === 'next' && event) {
-      kicker = 'Up next · 다음';
-      title = event.title;
-      sub = html`<time>${formatDateLong(event.date)}</time>, ${formatTimeRange(event) || 'soon'}`;
-      icon = '⏭️';
-    } else {
-      kicker = '여행 끝 · Done';
-      title = 'Trip complete 🎉';
-      sub = html`Hope it was unforgettable.`;
-      icon = '🏠';
-    }
+		if (state === 'pre' && event) {
+			const d = daysUntil(now, event.date);
+			kicker = '안녕하세요 · Annyeong';
+			title =
+				d <= 0 ? 'Departure day — let’s go!' : `Trip begins in ${d} day${d === 1 ? '' : 's'}`;
+			sub = html`First up: ${event.title}`;
+			icon = '🛫';
+		} else if (state === 'now' && event) {
+			kicker = 'Right now · 지금';
+			title = event.title;
+			sub = html`Until <time>${event.end ?? '—'}</time>${event.location
+				? html` · ${event.location.name}`
+				: nothing}`;
+			icon = '📍';
+		} else if (state === 'next' && event) {
+			kicker = 'Up next · 다음';
+			title = event.title;
+			sub = html`<time>${formatDateLong(event.date)}</time>, ${formatTimeRange(event) || 'soon'}`;
+			icon = '⏭️';
+		} else {
+			kicker = '여행 끝 · Done';
+			title = 'Trip complete 🎉';
+			sub = html`Hope it was unforgettable.`;
+			icon = '🏠';
+		}
 
-    return html`
+		return html`
       <aside aria-live="polite" aria-label="What we should be doing now">
         <i aria-hidden="true">${icon}</i>
         <section>
@@ -107,5 +107,5 @@ export class SkNowBanner extends LitElement {
         </section>
       </aside>
     `;
-  }
+	}
 }
