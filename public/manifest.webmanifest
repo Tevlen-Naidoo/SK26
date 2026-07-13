@@ -1,0 +1,19 @@
+{
+  "name": "SK26 · South Korea 2026",
+  "short_name": "SK26",
+  "description": "TNT trip to South Korea, July–August 2026: itinerary, calendar, weather, apps and a currency converter.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7f3ec",
+  "theme_color": "#cd2e3a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

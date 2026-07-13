@@ -42,7 +42,42 @@ export const TIPS: Tip[] = [
 		scope: 'global',
 		category: 'booking',
 		title: 'Pre-book the time-sensitive things',
-		body: 'Everland tickets (Klook), Haeundae Sky Capsule, the 1 Aug KTX, and the Jeju rental car. Check the Lotte Giants home schedule.',
+		body: 'Everland tickets (Klook), Haeundae Sky Capsule, the 1 Aug train, and the Jeju rental car. Check the Lotte Giants home schedule.',
+	},
+	{
+		id: 'g-wifi',
+		scope: 'global',
+		category: 'connectivity',
+		title: 'Connect to airport Wi-Fi on arrival',
+		body: 'As soon as you land, hop on the free airport Wi-Fi and message your driver so pickup is sorted before you clear the terminal.',
+	},
+	{
+		id: 'g-docs',
+		scope: 'global',
+		category: 'safety',
+		title: 'Carry your passport & insurance',
+		body: 'Keep your passport and travel insurance details on you at all times — you may be asked for them, and you need them for domestic flights.',
+	},
+	{
+		id: 'g-cash',
+		scope: 'global',
+		category: 'money',
+		title: 'Keep some Korean Won handy',
+		body: 'Carry a bit of KRW cash for incidentals — markets, small Jeju spots, and the odd machine that only takes cash.',
+	},
+	{
+		id: 'g-power',
+		scope: 'global',
+		category: 'connectivity',
+		title: 'Plugs: Type C & F, 220V',
+		body: 'South Korea uses Type C and Type F plugs at 220V. Bring the right adapter for your chargers.',
+	},
+	{
+		id: 'g-taxi',
+		scope: 'global',
+		category: 'transport',
+		title: 'Taxis are easy — use Kakao T',
+		body: 'Taxis are plentiful and cheap. The Kakao T app makes hailing and paying painless, especially when there is a language gap.',
 	},
 
 	// Seoul

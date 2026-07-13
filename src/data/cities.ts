@@ -16,6 +16,7 @@ export const SEGMENTS: CitySegment[] = [
 			google:
 				'https://www.google.com/maps/search/?api=1&query=Friendly+DH+Naissance+Hotel+Dongsomun-ro+Seoul',
 			kakao: 'https://map.kakao.com/?q=' + encodeURIComponent('동소문로20나길 39'),
+			naver: 'https://map.naver.com/p/search/' + encodeURIComponent('동소문로20나길 39'),
 		},
 	},
 	{
@@ -30,6 +31,7 @@ export const SEGMENTS: CitySegment[] = [
 			google:
 				'https://www.google.com/maps/search/?api=1&query=Hotel+Moon+Seowang-ro+Jeju',
 			kakao: 'https://map.kakao.com/?q=' + encodeURIComponent('서왕로24길 1'),
+			naver: 'https://map.naver.com/p/search/' + encodeURIComponent('서왕로24길 1'),
 		},
 	},
 	{
@@ -44,6 +46,7 @@ export const SEGMENTS: CitySegment[] = [
 			google:
 				'https://www.google.com/maps/search/?api=1&query=Ososo+Busanjinseonggongwon-ro+Busan',
 			kakao: 'https://map.kakao.com/?q=' + encodeURIComponent('부산진성공원로 9-1'),
+			naver: 'https://map.naver.com/p/search/' + encodeURIComponent('부산진성공원로 9-1'),
 		},
 	},
 ];

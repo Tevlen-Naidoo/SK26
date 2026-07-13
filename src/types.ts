@@ -16,6 +16,7 @@ export type EventCategory =
 export interface MapLinks {
 	google?: string;
 	kakao?: string;
+	naver?: string;
 }
 
 export interface Cost {
@@ -41,6 +42,8 @@ export interface TripEvent {
 	cost?: Cost;
 	optional?: boolean;
 	tags?: string[];
+	/** Booking / ticket URL (GetYourGuide, Klook, etc.). */
+	booking?: string;
 }
 
 export interface CitySegment {
@@ -84,10 +87,30 @@ export type TabId =
 	| 'home'
 	| 'itinerary'
 	| 'calendar'
+	| 'weather'
 	| 'cuisine'
 	| 'inspo'
+	| 'apps'
+	| 'money'
+	| 'documents'
 	| 'tips'
 	| 'clocks';
+
+export interface DocItem {
+	/** Stable id = path relative to public/documents. */
+	id: string;
+	/** Display title derived from the filename. */
+	name: string;
+	/** Served URL, e.g. /documents/ek762.pdf (path-segment encoded). */
+	url: string;
+	/** Original filename, used as the download name. */
+	filename: string;
+	/** Lower-case extension incl. dot, e.g. ".pdf". */
+	ext: string;
+	kind: 'pdf' | 'image' | 'other';
+	/** File size in bytes. */
+	size: number;
+}
 
 export interface CuisineItem {
 	id: string;

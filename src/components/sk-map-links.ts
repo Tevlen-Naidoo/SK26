@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { sharedStyles } from '../styles/shared.js';
+import { ICON_URL } from '../lib/brand-icons.js';
 
 @customElement('sk-map-links')
 export class SkMapLinks extends LitElement {
@@ -18,7 +19,7 @@ export class SkMapLinks extends LitElement {
       a {
         display: inline-flex;
         align-items: center;
-        gap: 0.35em;
+        gap: 0.4em;
         padding: 0.2em 0.6em;
         border: 1px solid var(--line);
         border-radius: 999px;
@@ -26,6 +27,12 @@ export class SkMapLinks extends LitElement {
         font-size: var(--step--1);
         text-decoration: none;
         color: var(--ink-soft);
+      }
+      a img {
+        width: 1.1em;
+        height: 1.1em;
+        object-fit: contain;
+        border-radius: 3px;
       }
       a:hover {
         border-color: var(--city-accent);
@@ -36,20 +43,32 @@ export class SkMapLinks extends LitElement {
 
 	@property() google?: string;
 	@property() kakao?: string;
+	@property() naver?: string;
 
 	override render() {
-		if (!this.google && !this.kakao) return nothing;
+		if (!this.google && !this.kakao && !this.naver) return nothing;
 		return html`
       <nav aria-label="Map links">
         <ul>
-          ${this.google
+          ${this.naver
 				? html`<li>
-                <a href=${this.google} target="_blank" rel="noopener noreferrer">📍 Google</a>
+                <a href=${this.naver} target="_blank" rel="noopener noreferrer">
+                  <img src=${ICON_URL.naverMap} alt="" /> Naver
+                </a>
               </li>`
 				: nothing}
           ${this.kakao
 				? html`<li>
-                <a href=${this.kakao} target="_blank" rel="noopener noreferrer">🗺️ Kakao</a>
+                <a href=${this.kakao} target="_blank" rel="noopener noreferrer">
+                  <img src=${ICON_URL.kakaoMap} alt="" /> Kakao
+                </a>
+              </li>`
+				: nothing}
+          ${this.google
+				? html`<li>
+                <a href=${this.google} target="_blank" rel="noopener noreferrer">
+                  <img src=${ICON_URL.googleMaps} alt="" /> Google
+                </a>
               </li>`
 				: nothing}
         </ul>

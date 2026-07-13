@@ -12,8 +12,12 @@ import './sk-city-badge.js';
 import './sk-home.js';
 import './sk-itinerary.js';
 import './sk-calendar.js';
+import './sk-weather.js';
 import './sk-cuisine.js';
 import './sk-inspiration.js';
+import './sk-apps.js';
+import './sk-convert.js';
+import './sk-documents.js';
 import './sk-tips.js';
 import './sk-clocks.js';
 
@@ -21,8 +25,12 @@ const TABS: { id: TabId; en: string; ko: string }[] = [
 	{ id: 'home', en: 'Home', ko: '홈' },
 	{ id: 'itinerary', en: 'Itinerary', ko: '일정' },
 	{ id: 'calendar', en: 'Calendar', ko: '달력' },
+	{ id: 'weather', en: 'Weather', ko: '날씨' },
 	{ id: 'cuisine', en: 'Cuisine', ko: '음식' },
 	{ id: 'inspo', en: 'Photos', ko: '사진' },
+	{ id: 'apps', en: 'Apps', ko: '앱' },
+	{ id: 'money', en: 'Convert', ko: '환전' },
+	{ id: 'documents', en: 'Docs', ko: '서류' },
 	{ id: 'tips', en: 'Tips', ko: '꿀팁' },
 	{ id: 'clocks', en: 'Clocks', ko: '시계' },
 ];
@@ -214,10 +222,18 @@ export class SkApp extends LitElement {
 				return html`<sk-itinerary></sk-itinerary>`;
 			case 'calendar':
 				return html`<sk-calendar .now=${this.override ? this.now : undefined}></sk-calendar>`;
+			case 'weather':
+				return html`<sk-weather city=${city}></sk-weather>`;
 			case 'cuisine':
 				return html`<sk-cuisine></sk-cuisine>`;
 			case 'inspo':
 				return html`<sk-inspiration city=${city}></sk-inspiration>`;
+			case 'apps':
+				return html`<sk-apps></sk-apps>`;
+			case 'money':
+				return html`<sk-convert></sk-convert>`;
+			case 'documents':
+				return html`<sk-documents></sk-documents>`;
 			case 'tips':
 				return html`<sk-tips city=${city}></sk-tips>`;
 			case 'clocks':
@@ -272,7 +288,7 @@ export class SkApp extends LitElement {
 
       <footer>
         <p>
-          Made for the SK26 trip · data in <code>Itinerary.md</code> ·
+          Made for the SK26 trip
           ${this.override ? html`<mark>preview @ ${this.override}</mark>` : nothing}
         </p>
       </footer>

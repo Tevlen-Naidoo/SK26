@@ -68,6 +68,21 @@ export class SkEventItem extends LitElement {
         color: var(--ink-soft);
         font-weight: 600;
       }
+      a.book {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3em;
+        padding: 0.15em 0.6em;
+        border-radius: 999px;
+        background: var(--city-accent);
+        color: #fff;
+        font-size: var(--step--1);
+        font-weight: 600;
+        text-decoration: none;
+      }
+      a.book:hover {
+        filter: brightness(1.08);
+      }
       mark {
         background: color-mix(in srgb, var(--city-accent) 16%, transparent);
         color: inherit;
@@ -111,11 +126,21 @@ export class SkEventItem extends LitElement {
                     >`
 				: nothing}
             ${cost?.note ? html`<mark>${cost.note}</mark>` : nothing}
+            ${e.booking
+				? html`<a
+                    class="book"
+                    href=${e.booking}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >🎟️ Book</a
+                  >`
+				: nothing}
           </p>
-          ${e.location?.google || e.location?.kakao
+          ${e.location?.google || e.location?.kakao || e.location?.naver
 				? html`<sk-map-links
                 .google=${e.location.google}
                 .kakao=${e.location.kakao}
+                .naver=${e.location.naver}
               ></sk-map-links>`
 				: nothing}
         </section>

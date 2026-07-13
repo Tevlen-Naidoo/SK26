@@ -3,6 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { sharedStyles } from '../styles/shared.js';
 import { EVENTS } from '../data/itinerary.js';
 import { formatDateLong, seoulYMD } from '../lib/dates.js';
+import { downloadIcs } from '../lib/ics.js';
 import type { TripEvent } from '../types.js';
 import './sk-now-banner.js';
 import './sk-event-item.js';
@@ -26,6 +27,31 @@ export class SkCalendar extends LitElement {
       }
       h1 {
         font-size: var(--step-3);
+      }
+      .addcal {
+        margin-top: var(--space-3);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-2) var(--space-3);
+      }
+      button.ics {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4em;
+        padding: 0.55em 1em;
+        border: 0;
+        border-radius: 999px;
+        background: var(--city-accent);
+        color: #fff;
+        font-weight: 600;
+        box-shadow: var(--shadow);
+      }
+      button.ics:hover {
+        filter: brightness(1.08);
+      }
+      .addcal small {
+        max-width: 30rem;
       }
       sk-now-banner {
         display: block;
@@ -217,6 +243,16 @@ export class SkCalendar extends LitElement {
       <header class="intro">
         <p class="ko">달력 · Calendar</p>
         <h1>Where to be, when</h1>
+        <p class="addcal">
+          <button class="ics" type="button" @click=${() => downloadIcs()}>
+            <i aria-hidden="true">📅</i> Add all to my calendar
+          </button>
+          <small
+            >Downloads the whole trip as an <code>.ics</code> file — open it to add
+            every event (with 30-min alerts, Korea time) to Apple, Google or Samsung
+            Calendar.</small
+          >
+        </p>
       </header>
 
       <sk-now-banner .now=${this.now}></sk-now-banner>

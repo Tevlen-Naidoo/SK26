@@ -4,9 +4,11 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
+    "documents": "node scripts/build-documents.mjs",
+    "predev": "npm run documents",
     "dev": "vite",
     "guard": "node scripts/no-div-guard.mjs",
-    "build": "tsc --noEmit && npm run guard && vite build",
+    "build": "npm run documents && tsc --noEmit && npm run guard && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

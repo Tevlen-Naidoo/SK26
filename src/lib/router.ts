@@ -4,8 +4,12 @@ const TABS: TabId[] = [
 	'home',
 	'itinerary',
 	'calendar',
+	'weather',
 	'cuisine',
 	'inspo',
+	'apps',
+	'money',
+	'documents',
 	'tips',
 	'clocks',
 ];

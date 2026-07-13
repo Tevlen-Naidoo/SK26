@@ -5,6 +5,7 @@ import { EVENTS } from '../data/itinerary.js';
 import { SEGMENTS } from '../data/cities.js';
 import type { City, TripEvent } from '../types.js';
 import './sk-day-card.js';
+import './sk-reminders.js';
 
 interface DayGroup {
 	date: string;
@@ -29,6 +30,10 @@ export class SkItinerary extends LitElement {
       .lead {
         color: var(--ink-soft);
         margin-top: var(--space-2);
+      }
+      sk-reminders {
+        display: block;
+        margin-top: var(--space-3);
       }
       section.city {
         margin-bottom: var(--space-4);
@@ -89,6 +94,7 @@ export class SkItinerary extends LitElement {
           18 July – 2 August 2026. Times are local (Asia/Seoul). Costs are per person
           (₩ and R). Tap a map chip for directions.
         </p>
+        <sk-reminders></sk-reminders>
       </header>
       ${groups.map((grp) => {
 			const seg = SEGMENTS.find((s) => s.city === grp.city);
